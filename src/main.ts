@@ -11,12 +11,16 @@ export class GameScene extends Phaser.Scene {
     body: Phaser.Physics.Arcade.Body
   }
 
+  private triangle: Phaser.GameObjects.Triangle & {
+    // body: Phaser.Physics.Arcade.Body
+  }
+
   constructor() {
     super(sceneConfig)
   }
 
   public create() {
-    this.square = this.add.rectangle(400, 400, 100, 100, 0xffffff) as any
+    this.square = this.add.rectangle(400, 400, 50, 50, 0xffffff) as any
     this.physics.add.existing(this.square)
   }
 
@@ -38,6 +42,20 @@ export class GameScene extends Phaser.Scene {
     } else {
       this.square.body.setVelocityX(0)
     }
+
+    this.input.on("pointermove", this.lookAt, this)
+  }
+
+  private lookAt(pointer) {
+    var angle =
+      Phaser.Math.RAD_TO_DEG *
+      Phaser.Math.Angle.Between(
+        this.square.x,
+        this.square.y,
+        pointer.x,
+        pointer.y
+      )
+    this.square.setAngle(angle)
   }
 }
 
