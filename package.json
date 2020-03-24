@@ -1,0 +1,31 @@
+{
+  "name": "battle-lite",
+  "version": "2.0.0",
+  "description": "v2",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "copy-webpack-plugin": "^5.1.1",
+    "phaser": "^3.22.0",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "prettier": "^2.0.2",
+    "pretty-quick": "^2.0.1"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "author": "",
+  "license": "ISC"
+}
