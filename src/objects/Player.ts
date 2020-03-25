@@ -35,7 +35,6 @@ export class Player extends Phaser.GameObjects.Sprite {
   }
 
   private addProjectile(pointer) {
-    console.log(pointer)
     this.projectiles.add(
       new Projectile({
         scene: this.currentScene,
