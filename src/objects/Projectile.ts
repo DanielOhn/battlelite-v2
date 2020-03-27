@@ -3,35 +3,45 @@ interface Props {
   x: number
   y: number
   key: string
-  destination: {
-    x: number
-    y: number
-  }
 }
 
 export class Projectile extends Phaser.GameObjects.Image {
   public body: Phaser.Physics.Arcade.Body
-
+  private currentScene: Phaser.Scene
+  private born: number
   private speed: number
-  private pointer: { x: number; y: number }
 
   constructor(props: Props) {
     super(props.scene, props.x, props.y, props.key)
 
-    this.pointer = props.destination
+    this.currentScene = props.scene
 
     this.initImage()
-    this.scene.add.existing(this)
+    this.currentScene.add.existing(this)
+  }
+
+  public shoot(shooter, target) {
+    let pointer = this.currentScene.input.mousePointer
+
+    this.setPosition(this.x, this.y)
+    this.scene.physics.moveTo(this, pointer.x, pointer.y, this.speed)
+
+    this.rotation = shooter.rotation
+    this.born = 0
   }
 
   private initImage(): void {
-    this.speed = 1000
+    this.speed = 700
     this.setOrigin(0.5, 0.5)
-    this.setDepth(2)
 
     this.scene.physics.world.enable(this)
-    this.scene.physics.moveTo(this, this.pointer.x, this.pointer.y, this.speed)
   }
 
-  public update(): void {}
+  public update(delta: number): void {
+    this.born += delta
+    if (this.born > 1800) {
+      this.setActive(false)
+      this.setVisible(false)
+    }
+  }
 }

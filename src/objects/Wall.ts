@@ -1,5 +1,3 @@
-import { Physics } from "phaser"
-
 interface Props {
   scene: Phaser.Scene
   x: number
@@ -8,8 +6,6 @@ interface Props {
 }
 
 export class Wall extends Phaser.GameObjects.Image {
-  public body: Physics.Arcade.StaticBody
-
   constructor(props: Props) {
     super(props.scene, props.x, props.y, props.key)
 

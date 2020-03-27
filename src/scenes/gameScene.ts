@@ -19,6 +19,7 @@ export class GameScene extends Phaser.Scene {
     this.load.image("test", "/assets/test.png")
     this.load.image("bullet", "/assets/bullet.png")
     this.load.image("wall", "/assets/wall.png")
+    this.load.image('target', '/assets/target.png')
   }
 
   public create(): void {
@@ -30,52 +31,41 @@ export class GameScene extends Phaser.Scene {
     })
 
     this.createWalls()
+
+    this.game.canvas.addEventListener('mousedown', () => {
+      this.game.input.mouse.requestPointerLock()
+    })
+    
   }
 
   private createWalls() {
-    this.walls = this.add.group({
-      active: true,
-      maxSize: 4 * 15,
-      runChildUpdate: true,
+    this.walls = this.physics.add.staticGroup()
+    this.walls = this.physics.add.group({
+      key: "wall",
+      repeat: 15,
+      setXY: { x: 16, y: 16, stepX: 32 },
     })
-
-    for (let i = 0; i < 15; i++) {
-      this.walls.add(
-        new Wall({
-          scene: this,
-          x: i * 32,
-          y: 0,
-          key: "wall",
-        })
-      )
-      this.walls.add(
-        new Wall({
-          scene: this,
-          x: i * 32,
-          y: 15 * 32,
-          key: "wall",
-        })
-      )
-      this.walls.add(
-        new Wall({
-          scene: this,
-          x: 0,
-          y: i * 32,
-          key: "wall",
-        })
-      )
-      this.walls.add(
-        new Wall({
-          scene: this,
-          x: 15 * 32,
-          y: i * 32,
-          key: "wall",
-        })
-      )
-    }
   }
 
   public update(): void {
     this.player.update()
+    // this.playerCollision()
   }
-}
+  
+
+  // private playerCollision() {
+  //   this.physics.add.overlap(
+  //     this.player.getProjectiles(),
+  //     this.walls,
+  //     this.destroyProjectile,
+  //     null,
+  //     this
+  //   )
+  }
+ 
+  // private destroyProjectile(proj, wall) {
+  //   // this.player.projectiles.killAndHide(proj)
+  //   proj.disableBody(true, true)
+  //   // proj.active = false
+  // }
+
